@@ -1,95 +1,95 @@
-gin vs net/http
+    gin vs net/http
 
-request/sec
-gin: 1700~
-net/http: 16000~
+    request/sec
+    gin: 1700~
+    net/http: 16000~
 
-gin:
-package main
+    gin:
+    package main
 
-import (
-	"github.com/gin-gonic/gin"
-)
+    import (
+        "github.com/gin-gonic/gin"
+    )
 
-func main() {
-	router := gin.Default()
+    func main() {
+        router := gin.Default()
 
-	router.GET("/", func(c *gin.Context) {
-		c.String(200, "Hello, World!")
-	})
+        router.GET("/", func(c *gin.Context) {
+            c.String(200, "Hello, World!")
+        })
 
-	router.Run(":8001")
-}
+        router.Run(":8001")
+    }
 
-net/http:
-package main
+    net/http:
+    package main
 
-import (
-	"fmt"
-	"net/http"
-)
+    import (
+        "fmt"
+        "net/http"
+    )
 
-func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Hello, World!")
-	})
+    func main() {
+        http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+            fmt.Fprint(w, "Hello, World!")
+        })
 
-	http.ListenAndServe(":8000", nil)
-}
-
-
-
-gin vs net/http 2
-
-request/sec
-gin: 16000~
-net/http: 16000~
+        http.ListenAndServe(":8000", nil)
+    }
 
 
-gin:
-package main
 
-import (
-	"log"
-	"net/http"
+    gin vs net/http 2
 
-	"github.com/gin-gonic/gin"
-)
-
-func main() {
-	s := gin.New()
-	s.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})
-	log.Fatal(http.ListenAndServe(":8001", s))
-}
+    request/sec
+    gin: 16000~
+    net/http: 16000~
 
 
-net/http:
-package main
+    gin:
+    package main
 
-import (
-	"fmt"
-	"log"
-	"net/http"
-)
+    import (
+        "log"
+        "net/http"
 
-func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		switch request.Method {
-		case "GET":
-			writer.WriteHeader(http.StatusOK)
-			fmt.Fprint(writer, "pong")
-		default:
-			http.NotFound(writer, request)
-		}
-	})
-	s := &http.Server{
-		Addr:    ":8000",
-		Handler: mux,
-	}
-	log.Fatal(s.ListenAndServe())
-}
+        "github.com/gin-gonic/gin"
+    )
+
+    func main() {
+        s := gin.New()
+        s.GET("/", func(c *gin.Context) {
+            c.String(http.StatusOK, "pong")
+        })
+        log.Fatal(http.ListenAndServe(":8001", s))
+    }
+
+
+    net/http:
+    package main
+
+    import (
+        "fmt"
+        "log"
+        "net/http"
+    )
+
+    func main() {
+        mux := http.NewServeMux()
+        mux.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+            switch request.Method {
+            case "GET":
+                writer.WriteHeader(http.StatusOK)
+                fmt.Fprint(writer, "pong")
+            default:
+                http.NotFound(writer, request)
+            }
+        })
+        s := &http.Server{
+            Addr:    ":8000",
+            Handler: mux,
+        }
+        log.Fatal(s.ListenAndServe())
+    }
 
 

@@ -97,3 +97,15 @@ func main() {
 	http.ListenAndServe(":8000", nil)
 }
 ```
+
+## Summary:
+
+In Gin, the default mode uses the net/http package under the hood. However, for the best performance, it is recommended to use gin.New() instead of gin.Default().
+
+When using gin.Default(), Gin sets up some default middleware handlers, such as logging and recovery, which provide convenience but add some overhead to the request handling process. These default middleware handlers are useful for development and debugging purposes.
+
+On the other hand, gin.New() creates a new Gin engine without any default middleware handlers. This allows for a leaner and faster setup since you have full control over which middleware handlers to add, resulting in improved performance.
+
+By using gin.New(), you can choose and add only the necessary middleware handlers based on your specific requirements, optimizing the performance of your Gin application.
+
+Overall, while gin.Default() provides convenience by including default middleware handlers, if performance is a top priority, it is recommended to use gin.New() and selectively add middleware handlers as needed.
