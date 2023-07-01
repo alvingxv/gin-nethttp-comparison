@@ -54,7 +54,7 @@ func main() {
 }
 ```
 
-### Test 1
+### Test 2
 
 #### Gin:
 - Achieved request/second: 16000~
